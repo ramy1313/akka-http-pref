@@ -10,6 +10,131 @@ run gatling using
 
 ## All the results are from the second run 
 
+### Tomcat7 on Core i5 machine
+#### results from ab command
+
+    ab -c 100 -n 300000 http://localhost:8080/backend
+is 
+
+    Server Software:        Apache-Coyote/1.1
+    Server Hostname:        localhost
+    Server Port:            8080
+    
+    Document Path:          /backend
+    Document Length:        983 bytes
+    
+    Concurrency Level:      100
+    Time taken for tests:   16.241 seconds
+    Complete requests:      300000
+    Failed requests:        0
+    Non-2xx responses:      300000
+    Total transferred:      352200000 bytes
+    HTML transferred:       294900000 bytes
+    Requests per second:    18471.84 [#/sec] (mean)
+    Time per request:       5.414 [ms] (mean)
+    Time per request:       0.054 [ms] (mean, across all concurrent requests)
+    Transfer rate:          21177.68 [Kbytes/sec] received
+Keep alive
+
+    ab -k -c 100 -n 300000 http://localhost:8080/backend
+is
+
+    Server Software:        Apache-Coyote/1.1
+    Server Hostname:        localhost
+    Server Port:            8080
+    
+    Document Path:          /backend
+    Document Length:        983 bytes
+    
+    Concurrency Level:      100
+    Time taken for tests:   8.883 seconds
+    Complete requests:      300000
+    Failed requests:        0
+    Non-2xx responses:      300000
+    Keep-Alive requests:    297051
+    Total transferred:      353685255 bytes
+    HTML transferred:       294900000 bytes
+    Requests per second:    33772.49 [#/sec] (mean)
+    Time per request:       2.961 [ms] (mean)
+    Time per request:       0.030 [ms] (mean, across all concurrent requests)
+    Transfer rate:          38882.92 [Kbytes/sec] received
+#### results from gatling 
+ramp up
+
+    rampUsers(280000) over (1 minute)
+is completed in 60 seconds
+
+    ================================================================================
+    ---- Global Information --------------------------------------------------------
+    > request count                                     280000 (OK=280000 KO=0     )
+    > min response time                                      0 (OK=0      KO=-     )
+    > max response time                                  52004 (OK=52004  KO=-     )
+    > mean response time                                  1048 (OK=1048   KO=-     )
+    > std deviation                                       3362 (OK=3362   KO=-     )
+    > response time 50th percentile                          6 (OK=6      KO=-     )
+    > response time 75th percentile                        169 (OK=169    KO=-     )
+    > response time 95th percentile                       7246 (OK=7247   KO=-     )
+    > response time 99th percentile                      15478 (OK=15478  KO=-     )
+    > mean requests/sec                                4590.164 (OK=4590.164 KO=-     )
+    ---- Response Time Distribution ------------------------------------------------
+    > t < 800 ms                                        226096 ( 81%)
+    > 800 ms < t < 1200 ms                               12097 (  4%)
+    > t > 1200 ms                                        41807 ( 15%)
+    > failed                                                 0 (  0%)
+    ================================================================================
+at once
+
+    atOnceUsers(7000)
+is completed in 4 seconds
+
+    ================================================================================
+    ---- Global Information --------------------------------------------------------
+    > request count                                       7000 (OK=7000   KO=0     )
+    > min response time                                      0 (OK=0      KO=-     )
+    > max response time                                   1021 (OK=1021   KO=-     )
+    > mean response time                                    19 (OK=19     KO=-     )
+    > std deviation                                         60 (OK=60     KO=-     )
+    > response time 50th percentile                          2 (OK=2      KO=-     )
+    > response time 75th percentile                         25 (OK=25     KO=-     )
+    > response time 95th percentile                         70 (OK=70     KO=-     )
+    > response time 99th percentile                        149 (OK=149    KO=-     )
+    > mean requests/sec                                   1400 (OK=1400   KO=-     )
+    ---- Response Time Distribution ------------------------------------------------
+    > t < 800 ms                                          6980 (100%)
+    > 800 ms < t < 1200 ms                                  20 (  0%)
+    > t > 1200 ms                                            0 (  0%)
+    > failed                                                 0 (  0%)
+    ================================================================================
+constant users per second
+
+    constantUsersPerSec(5000) during(1 minute)
+is completed in 69 seconds
+
+    ================================================================================
+    ---- Global Information --------------------------------------------------------
+    > request count                                     300000 (OK=299959 KO=41    )
+    > min response time                                      0 (OK=0      KO=60001 )
+    > max response time                                  60011 (OK=52605  KO=60011 )
+    > mean response time                                  1737 (OK=1729   KO=60005 )
+    > std deviation                                       5180 (OK=5136   KO=3     )
+    > response time 50th percentile                         20 (OK=20     KO=60006 )
+    > response time 75th percentile                       1048 (OK=1048   KO=60009 )
+    > response time 95th percentile                       8452 (OK=8414   KO=60011 )
+    > response time 99th percentile                      31174 (OK=31172  KO=60011 )
+    > mean requests/sec                                4285.714 (OK=4285.129 KO=0.586 )
+    ---- Response Time Distribution ------------------------------------------------
+    > t < 800 ms                                        220049 ( 73%)
+    > 800 ms < t < 1200 ms                               17904 (  6%)
+    > t > 1200 ms                                        62006 ( 21%)
+    > failed                                                41 (  0%)
+    ---- Errors --------------------------------------------------------------------
+    > j.u.c.TimeoutException: Request timeout to not-connected after     40 (97.56%)
+     60000ms
+    > j.n.ConnectException: connection timed out: localhost/127.0.0.      1 ( 2.44%)
+    1:8080
+    ================================================================================
+
+
 ### Akka 2.4.8 on Core i5 machine
 #### results from ab command 
 
