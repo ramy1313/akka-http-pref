@@ -21,7 +21,7 @@ class LoadTest extends Simulation {
       .get("/backend"))
 
 //  setUp(
-//    loadTestScenario.inject(rampUsers(82000) over (1 minute))
+//    loadTestScenario.inject(rampUsers(110000) over (1 minute))
 //  ).protocols(httpConf)
 
 //  setUp(
@@ -29,6 +29,6 @@ class LoadTest extends Simulation {
 //  ).protocols(httpConf)
 
   setUp(
-    loadTestScenario.inject(constantUsersPerSec(1350) during(1 minute))
+    loadTestScenario.inject(constantUsersPerSec(1850) during(1 minute))
   ).protocols(httpConf)
 }

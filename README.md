@@ -329,3 +329,119 @@ is completed in 60 seconds
     > t > 1200 ms                                        13815 ( 17%)
     > failed                                                 0 (  0%)
     ================================================================================
+### Akka 2.4.9-RC2 on Core i5 machine auto fusing off
+#### results from ab command
+
+    ab -c 100 -n 600000 http://localhost:8080/backend
+is
+
+    Server Software:        akka-http/2.4.9-RC2
+    Server Hostname:        localhost
+    Server Port:            8080
+    
+    Document Path:          /backend
+    Document Length:        31 bytes
+    
+    Concurrency Level:      100
+    Time taken for tests:   143.823 seconds
+    Complete requests:      600000
+    Failed requests:        0
+    Total transferred:      117000000 bytes
+    HTML transferred:       18600000 bytes
+    Requests per second:    4171.79 [#/sec] (mean)
+    Time per request:       23.971 [ms] (mean)
+    Time per request:       0.240 [ms] (mean, across all concurrent requests)
+    Transfer rate:          794.43 [Kbytes/sec] received
+Keep alive 
+
+    ab -k -c 100 -n 900000 http://localhost:8080/backend
+is 
+
+    Server Software:        akka-http/2.4.9-RC2
+    Server Hostname:        localhost
+    Server Port:            8080
+    
+    Document Path:          /backend
+    Document Length:        31 bytes
+    
+    Concurrency Level:      100
+    Time taken for tests:   19.566 seconds
+    Complete requests:      900000
+    Failed requests:        0
+    Keep-Alive requests:    900000
+    Total transferred:      180000000 bytes
+    HTML transferred:       27900000 bytes
+    Requests per second:    45998.29 [#/sec] (mean)
+    Time per request:       2.174 [ms] (mean)
+    Time per request:       0.022 [ms] (mean, across all concurrent requests)
+    Transfer rate:          8984.04 [Kbytes/sec] received
+#### results from gatling 
+ramp up
+
+    rampUsers(110000) over (1 minute)
+is completed in 60 seconds
+
+    ================================================================================
+    ---- Global Information --------------------------------------------------------
+    > request count                                     110000 (OK=110000 KO=0     )
+    > min response time                                      0 (OK=0      KO=-     )
+    > max response time                                  48634 (OK=48634  KO=-     )
+    > mean response time                                  2219 (OK=2219   KO=-     )
+    > std deviation                                       5992 (OK=5992   KO=-     )
+    > response time 50th percentile                         21 (OK=21     KO=-     )
+    > response time 75th percentile                       1091 (OK=1091   KO=-     )
+    > response time 95th percentile                      15084 (OK=15084  KO=-     )
+    > response time 99th percentile                      31206 (OK=31206  KO=-     )
+    > mean requests/sec                                1803.279 (OK=1803.279 KO=-     )
+    ---- Response Time Distribution ------------------------------------------------
+    > t < 800 ms                                         74000 ( 67%)
+    > 800 ms < t < 1200 ms                               10343 (  9%)
+    > t > 1200 ms                                        25657 ( 23%)
+    > failed                                                 0 (  0%)
+    ================================================================================
+at once 
+
+    atOnceUsers(7000)
+is completed in 11 seconds
+
+    ================================================================================
+    ---- Global Information --------------------------------------------------------
+    > request count                                       7000 (OK=7000   KO=0     )
+    > min response time                                      1 (OK=1      KO=-     )
+    > max response time                                   7967 (OK=7967   KO=-     )
+    > mean response time                                  2213 (OK=2213   KO=-     )
+    > std deviation                                       2096 (OK=2096   KO=-     )
+    > response time 50th percentile                       1465 (OK=1466   KO=-     )
+    > response time 75th percentile                       3120 (OK=3121   KO=-     )
+    > response time 95th percentile                       7043 (OK=7043   KO=-     )
+    > response time 99th percentile                       7255 (OK=7255   KO=-     )
+    > mean requests/sec                                583.333 (OK=583.333 KO=-     )
+    ---- Response Time Distribution ------------------------------------------------
+    > t < 800 ms                                          2026 ( 29%)
+    > 800 ms < t < 1200 ms                                 916 ( 13%)
+    > t > 1200 ms                                         4058 ( 58%)
+    > failed                                                 0 (  0%)
+    ================================================================================
+constant user per second
+
+    constantUsersPerSec(1850) during(1 minute)
+is completed in 62 seconds
+
+    ================================================================================
+    ---- Global Information --------------------------------------------------------
+    > request count                                     111000 (OK=111000 KO=0     )
+    > min response time                                      0 (OK=0      KO=-     )
+    > max response time                                  54407 (OK=54407  KO=-     )
+    > mean response time                                  1679 (OK=1679   KO=-     )
+    > std deviation                                       4915 (OK=4915   KO=-     )
+    > response time 50th percentile                         11 (OK=11     KO=-     )
+    > response time 75th percentile                       1041 (OK=1041   KO=-     )
+    > response time 95th percentile                      11294 (OK=11312  KO=-     )
+    > response time 99th percentile                      28358 (OK=28358  KO=-     )
+    > mean requests/sec                                1790.323 (OK=1790.323 KO=-     )
+    ---- Response Time Distribution ------------------------------------------------
+    > t < 800 ms                                         79051 ( 71%)
+    > 800 ms < t < 1200 ms                                9674 (  9%)
+    > t > 1200 ms                                        22275 ( 20%)
+    > failed                                                 0 (  0%)
+    ================================================================================

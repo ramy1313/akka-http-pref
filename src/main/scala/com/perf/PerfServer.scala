@@ -15,8 +15,8 @@ import scala.io.StdIn
   */
 object PerfServer extends App {
   implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
-  //implicit val materializer =  ActorMaterializer(ActorMaterializerSettings(system).withAutoFusing(false))
+  //implicit val materializer = ActorMaterializer()
+  implicit val materializer =  ActorMaterializer(ActorMaterializerSettings(system).withAutoFusing(false))
   implicit val executionContext = system.dispatcher
 
   val route: Route =
