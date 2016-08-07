@@ -5,7 +5,8 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server._
-import akka.stream.ActorMaterializer
+import akka.stream.scaladsl.Flow
+import akka.stream.{ActorMaterializer, ActorMaterializerSettings, Fusing}
 
 import scala.io.StdIn
 
@@ -14,7 +15,8 @@ import scala.io.StdIn
   */
 object PerfServer extends App {
   implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
+  //implicit val materializer = ActorMaterializer()
+  implicit val materializer =  ActorMaterializer(ActorMaterializerSettings(system).withAutoFusing(false))
   implicit val executionContext = system.dispatcher
 
   val route: Route =
@@ -24,7 +26,10 @@ object PerfServer extends App {
       }
     }
 
-  val bindingFuture = Http().bindAndHandle(route, "0.0.0.0", 8080)
+  val prefused = Fusing.aggressive(route)
+  val httpHandler = Flow.fromGraph(prefused)
+
+  val bindingFuture = Http().bindAndHandle(httpHandler, "0.0.0.0", 8080)
 
   println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
   StdIn.readLine() // let it run until user presses return
