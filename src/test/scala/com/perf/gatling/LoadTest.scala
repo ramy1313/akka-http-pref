@@ -21,11 +21,11 @@ class LoadTest extends Simulation {
       .get("/backend"))
 
 //  setUp(
-//    loadTestScenario.inject(rampUsers(77000) over (1 minute))
+//    loadTestScenario.inject(rampUsers(82000) over (1 minute))
 //  ).protocols(httpConf)
 
 //  setUp(
-//    loadTestScenario.inject(atOnceUsers(4000))
+//    loadTestScenario.inject(atOnceUsers(7000))
 //  ).protocols(httpConf)
 
   setUp(
