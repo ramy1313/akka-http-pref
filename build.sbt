@@ -14,6 +14,11 @@ val AkkaActor = "com.typesafe.akka" %% "akka-actor" % akkaVersion
 val AkkaKernel = "com.typesafe.akka" %% "akka-kernel" % akkaVersion
 val AkkaHttp = "com.typesafe.akka" %% "akka-http-experimental" % akkaHttpVersion
 
+val AkkaPersistence = "com.typesafe.akka" %% "akka-persistence" % akkaVersion
+val AkkaPersistenceQuery = "com.typesafe.akka" %% "akka-persistence-query-experimental" % akkaVersion
+
+val AkkaPersistenceLevelDB = "org.iq80.leveldb" % "leveldb" % "0.9"
+
 val LogbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.3"
 
 
@@ -25,6 +30,9 @@ libraryDependencies ++= Seq(
   AkkaKernel,
   AkkaHttp,
   LogbackClassic,
+  AkkaPersistence,
+  AkkaPersistenceQuery,
+  AkkaPersistenceLevelDB,
   GatlingCharts % "test",
   GatlingTest % "test"
 )
