@@ -7,6 +7,14 @@ run project using
 run gatling using 
 
     sbt "project test" "gatling:test"
+    
+# Requests
+
+    http://localhost:8080/backend
+
+    http://localhost:8080/quacker?i=b9ogpt96K0NmkI
+
+    http://localhost:8080/biteq?i=b9ogpt96K0NmkI
 
 ## All the results are from the second run 
 

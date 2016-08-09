@@ -1,17 +1,23 @@
 package com.perf
 
 import akka.actor.{ActorSystem, Inbox}
+import akka.http.javadsl.model.headers.{AccessControlAllowOrigin, HttpOriginRange}
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
+import akka.http.scaladsl.model.headers.{`Access-Control-Allow-Headers`, `Access-Control-Allow-Methods`}
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpResponse}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server._
 import akka.stream.scaladsl.Flow
 import akka.stream.{ActorMaterializer, ActorMaterializerSettings, Fusing}
+import akka.util.Timeout
+import akka.pattern.ask
 import com.perf.AService._
+import com.perf.BiteWorker.BiteQ
 
 import scala.concurrent.duration._
 import language.postfixOps
 import scala.io.{Source, StdIn}
+import scala.util.Try
 
 /**
   * Created by rami on 8/7/16.
@@ -21,6 +27,8 @@ object PerfServer extends App {
   //implicit val materializer = ActorMaterializer()
   implicit val materializer =  ActorMaterializer(ActorMaterializerSettings(system).withAutoFusing(false))
   implicit val executionContext = system.dispatcher
+
+  implicit val MAX_REQUEST_DURATION: Timeout = 10 seconds
 
   val aService = system.actorOf(AService(), "AService")
 
@@ -64,6 +72,56 @@ object PerfServer extends App {
     path("backend") {
       get {
         complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
+      }
+    } ~ path("quacker") {
+      get {
+        parameter("i") { i =>
+          onComplete((system.actorOf(RequestHandler()) ? GetQuacker(i)).mapTo[Result]) {
+            case g: Try[GetQuackerResult] =>
+              val gr = g.get
+              val s = gr.i + " " + gr.v + "\n"
+              val h = HttpResponse(status = 200, entity = s)
+                .withHeaders(
+                  AccessControlAllowOrigin.create(HttpOriginRange.ALL),
+                  `Access-Control-Allow-Headers`("Access-Control-Allow-Origin", "Access-Control-Allow-Method", "Content-Type"),
+                  `Access-Control-Allow-Methods`(HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT, HttpMethods.OPTIONS, HttpMethods.DELETE)
+                )
+              complete(h)
+            case _ =>
+              val h = HttpResponse(status = 500, entity = "error")
+                .withHeaders(
+                  AccessControlAllowOrigin.create(HttpOriginRange.ALL),
+                  `Access-Control-Allow-Headers`("Access-Control-Allow-Origin", "Access-Control-Allow-Method", "Content-Type"),
+                  `Access-Control-Allow-Methods`(HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT, HttpMethods.OPTIONS, HttpMethods.DELETE)
+                )
+              complete(h)
+          }
+        }
+      }
+    } ~ path("biteq") {
+      get {
+        parameter("i") { i =>
+          onComplete((system.actorOf(RequestHandler()) ? BiteQ(i)).mapTo[Result]) {
+            case g: Try[BiteQResult] =>
+              val gr = g.get
+              val s = gr.tom + " " + gr.jerry + " " + gr.spike + " " + gr.quacker+ "\n"
+              val h = HttpResponse(status = 200, entity = s)
+                .withHeaders(
+                  AccessControlAllowOrigin.create(HttpOriginRange.ALL),
+                  `Access-Control-Allow-Headers`("Access-Control-Allow-Origin", "Access-Control-Allow-Method", "Content-Type"),
+                  `Access-Control-Allow-Methods`(HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT, HttpMethods.OPTIONS, HttpMethods.DELETE)
+                )
+              complete(h)
+            case _ =>
+              val h = HttpResponse(status = 500, entity = "error")
+                .withHeaders(
+                  AccessControlAllowOrigin.create(HttpOriginRange.ALL),
+                  `Access-Control-Allow-Headers`("Access-Control-Allow-Origin", "Access-Control-Allow-Method", "Content-Type"),
+                  `Access-Control-Allow-Methods`(HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT, HttpMethods.OPTIONS, HttpMethods.DELETE)
+                )
+              complete(h)
+          }
+        }
       }
     }
 
