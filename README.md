@@ -578,3 +578,74 @@ is completed in 62 seconds
     > t > 1200 ms                                        22275 ( 20%)
     > failed                                                 0 (  0%)
     ================================================================================
+
+### Tomcat8 on Core i7 machine
+#### results from wrk command
+
+    wrk -t8 -c100 -d20s -R100000 http://127.0.0.1:8080/
+is 
+
+    Running 20s test @ http://127.0.0.1:8080/
+      8 threads and 100 connections
+      Thread calibration: mean lat.: 2021.292ms, rate sampling interval: 7229ms
+      Thread calibration: mean lat.: 2011.946ms, rate sampling interval: 7106ms
+      Thread calibration: mean lat.: 2000.762ms, rate sampling interval: 7163ms
+      Thread calibration: mean lat.: 2029.512ms, rate sampling interval: 7266ms
+      Thread calibration: mean lat.: 2012.072ms, rate sampling interval: 7069ms
+      Thread calibration: mean lat.: 2048.157ms, rate sampling interval: 7167ms
+      Thread calibration: mean lat.: 1943.890ms, rate sampling interval: 6987ms
+      Thread calibration: mean lat.: 1993.564ms, rate sampling interval: 7221ms
+      Thread Stats   Avg      Stdev     Max   +/- Stdev
+        Latency     6.54s     1.19s    9.20s    59.20%
+        Req/Sec     7.00k    75.52     7.11k    62.50%
+      1147337 requests in 20.00s, 2.27GB read
+    Requests/sec:  57372.43
+    Transfer/sec:    116.22MB
+
+### Akka 2.4.9-RC2 on Core i7 machine
+#### results from wrk command
+
+    wrk -t8 -c100 -d20s -R100000 http://127.0.0.1:3000/
+is
+
+    Running 20s test @ http://127.0.0.1:3000/
+      8 threads and 100 connections
+      Thread calibration: mean lat.: 926.593ms, rate sampling interval: 3332ms
+      Thread calibration: mean lat.: 1029.758ms, rate sampling interval: 3604ms
+      Thread calibration: mean lat.: 1008.256ms, rate sampling interval: 3704ms
+      Thread calibration: mean lat.: 961.418ms, rate sampling interval: 3424ms
+      Thread calibration: mean lat.: 994.603ms, rate sampling interval: 3563ms
+      Thread calibration: mean lat.: 969.388ms, rate sampling interval: 3459ms
+      Thread calibration: mean lat.: 1014.891ms, rate sampling interval: 3704ms
+      Thread calibration: mean lat.: 958.555ms, rate sampling interval: 3549ms
+      Thread Stats   Avg      Stdev     Max   +/- Stdev
+        Latency     2.64s   618.89ms   4.33s    65.41%
+        Req/Sec    10.54k   213.77    11.02k    68.75%
+      1656129 requests in 20.00s, 307.98MB read
+      Non-2xx or 3xx responses: 1656129
+    Requests/sec:  82820.24
+    Transfer/sec:     15.40MB
+
+### Akka 2.4.9-RC2 on Core i7 machine auto fusing off
+#### results from wrk command
+
+    wrk -t8 -c100 -d20s -R100000 http://127.0.0.1:3000/
+is
+
+    Running 20s test @ http://127.0.0.1:3000/
+      8 threads and 100 connections
+      Thread calibration: mean lat.: 448.144ms, rate sampling interval: 1679ms
+      Thread calibration: mean lat.: 404.384ms, rate sampling interval: 1682ms
+      Thread calibration: mean lat.: 374.180ms, rate sampling interval: 1490ms
+      Thread calibration: mean lat.: 378.515ms, rate sampling interval: 1643ms
+      Thread calibration: mean lat.: 465.665ms, rate sampling interval: 1795ms
+      Thread calibration: mean lat.: 432.270ms, rate sampling interval: 1614ms
+      Thread calibration: mean lat.: 362.621ms, rate sampling interval: 1735ms
+      Thread calibration: mean lat.: 433.344ms, rate sampling interval: 1659ms
+      Thread Stats   Avg      Stdev     Max   +/- Stdev
+        Latency   638.59ms  555.83ms   2.39s    53.44%
+        Req/Sec    12.18k   392.87    12.70k    69.77%
+      1914356 requests in 20.00s, 356.01MB read
+      Non-2xx or 3xx responses: 1914356
+    Requests/sec:  95724.09
+    Transfer/sec:     17.80MB
