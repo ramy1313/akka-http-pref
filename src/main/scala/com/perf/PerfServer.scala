@@ -128,9 +128,9 @@ object PerfServer extends App {
 //  val prefused = Fusing.aggressive(route)
 //  val httpHandler = Flow.fromGraph(prefused)
 
-  val bindingFuture = Http().bindAndHandle(route, "0.0.0.0", 8080)
+  val bindingFuture = Http().bindAndHandle(route, "0.0.0.0", 3000)
 
-  println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
+  println(s"Server online at http://localhost:3000/\nPress RETURN to stop...")
   StdIn.readLine() // let it run until user presses return
   bindingFuture
     .flatMap(_.unbind()) // trigger unbinding from the port

@@ -582,49 +582,138 @@ is completed in 62 seconds
 ### Tomcat8 on Core i7 machine
 #### results from wrk command
 
-    wrk -t8 -c100 -d20s -R100000 http://127.0.0.1:8080/
+    wrk -t8 -c100 -d20s -R100000 http://localhost:3000/backend
 is 
 
-    Running 20s test @ http://127.0.0.1:8080/
+    Running 20s test @ http://localhost:3000/backend
       8 threads and 100 connections
-      Thread calibration: mean lat.: 2021.292ms, rate sampling interval: 7229ms
-      Thread calibration: mean lat.: 2011.946ms, rate sampling interval: 7106ms
-      Thread calibration: mean lat.: 2000.762ms, rate sampling interval: 7163ms
-      Thread calibration: mean lat.: 2029.512ms, rate sampling interval: 7266ms
-      Thread calibration: mean lat.: 2012.072ms, rate sampling interval: 7069ms
-      Thread calibration: mean lat.: 2048.157ms, rate sampling interval: 7167ms
-      Thread calibration: mean lat.: 1943.890ms, rate sampling interval: 6987ms
-      Thread calibration: mean lat.: 1993.564ms, rate sampling interval: 7221ms
+      Thread calibration: mean lat.: 1130.037ms, rate sampling interval: 3899ms
+      Thread calibration: mean lat.: 1080.816ms, rate sampling interval: 3753ms
+      Thread calibration: mean lat.: 1130.852ms, rate sampling interval: 3817ms
+      Thread calibration: mean lat.: 1081.531ms, rate sampling interval: 3721ms
+      Thread calibration: mean lat.: 1050.116ms, rate sampling interval: 3620ms
+      Thread calibration: mean lat.: 1105.129ms, rate sampling interval: 3950ms
+      Thread calibration: mean lat.: 1097.380ms, rate sampling interval: 3751ms
+      Thread calibration: mean lat.: 1103.611ms, rate sampling interval: 3827ms
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency     6.54s     1.19s    9.20s    59.20%
-        Req/Sec     7.00k    75.52     7.11k    62.50%
-      1147337 requests in 20.00s, 2.27GB read
-    Requests/sec:  57372.43
-    Transfer/sec:    116.22MB
+        Latency     3.01s   615.59ms   4.56s    63.64%
+        Req/Sec    10.14k    97.03    10.26k    50.00%
+      1606419 requests in 20.00s, 269.63MB read
+    Requests/sec:  80317.82
+    Transfer/sec:     13.48MB
+
+And
+
+    wrk -t8 -c100 -d20s -R100000 http://localhost:3000/quacker?i=b9ogpt96K0NmkI
+is 
+
+    Running 20s test @ http://localhost:3000/quacker?i=b9ogpt96K0NmkI
+      8 threads and 100 connections
+      Thread calibration: mean lat.: 4487.087ms, rate sampling interval: 16048ms
+      Thread calibration: mean lat.: 4480.704ms, rate sampling interval: 16023ms
+      Thread calibration: mean lat.: 4492.586ms, rate sampling interval: 16048ms
+      Thread calibration: mean lat.: 4477.791ms, rate sampling interval: 16039ms
+      Thread calibration: mean lat.: 4486.473ms, rate sampling interval: 16015ms
+      Thread calibration: mean lat.: 4492.172ms, rate sampling interval: 16048ms
+      Thread calibration: mean lat.: 4479.053ms, rate sampling interval: 16015ms
+      Thread calibration: mean lat.: 4487.284ms, rate sampling interval: 16031ms
+      Thread Stats   Avg      Stdev     Max   +/- Stdev
+        Latency    13.20s     2.51s   17.63s    57.71%
+        Req/Sec       -nan      -nan   0.00      0.00%
+      240525 requests in 20.00s, 85.56MB read
+    Requests/sec:  12026.31
+    Transfer/sec:      4.28MB
+
+And
+
+    wrk -t8 -c100 -d20s -R100000 http://localhost:3000/biteq?i=b9ogpt96K0NmkI
+
+is
+
+    Running 20s test @ http://localhost:3000/biteq?i=b9ogpt96K0NmkI
+      8 threads and 100 connections
+      Thread calibration: mean lat.: 4851.538ms, rate sampling interval: 17924ms
+      Thread calibration: mean lat.: 4866.918ms, rate sampling interval: 17760ms
+      Thread calibration: mean lat.: 4924.487ms, rate sampling interval: 18137ms
+      Thread calibration: mean lat.: 4923.326ms, rate sampling interval: 17825ms
+      Thread calibration: mean lat.: 5032.779ms, rate sampling interval: 18137ms
+      Thread calibration: mean lat.: 5074.230ms, rate sampling interval: 18186ms
+      Thread calibration: mean lat.: 5017.971ms, rate sampling interval: 18055ms
+      Thread calibration: mean lat.: 4995.010ms, rate sampling interval: 17973ms
+      Thread Stats   Avg      Stdev     Max   +/- Stdev
+        Latency    15.04s     2.85s   19.92s    57.68%
+        Req/Sec       -nan      -nan   0.00      0.00%
+      1577 requests in 20.07s, 569.81KB read
+    Requests/sec:     78.58
+    Transfer/sec:     28.39KB
 
 ### Akka 2.4.9-RC2 on Core i7 machine
 #### results from wrk command
 
-    wrk -t8 -c100 -d20s -R100000 http://127.0.0.1:3000/
+    wrk -t8 -c100 -d20s -R100000 http://127.0.0.1:3000/backend
 is
 
-    Running 20s test @ http://127.0.0.1:3000/
+    Running 20s test @ http://localhost:3000/backend
       8 threads and 100 connections
-      Thread calibration: mean lat.: 926.593ms, rate sampling interval: 3332ms
-      Thread calibration: mean lat.: 1029.758ms, rate sampling interval: 3604ms
-      Thread calibration: mean lat.: 1008.256ms, rate sampling interval: 3704ms
-      Thread calibration: mean lat.: 961.418ms, rate sampling interval: 3424ms
-      Thread calibration: mean lat.: 994.603ms, rate sampling interval: 3563ms
-      Thread calibration: mean lat.: 969.388ms, rate sampling interval: 3459ms
-      Thread calibration: mean lat.: 1014.891ms, rate sampling interval: 3704ms
-      Thread calibration: mean lat.: 958.555ms, rate sampling interval: 3549ms
+      Thread calibration: mean lat.: 947.474ms, rate sampling interval: 3817ms
+      Thread calibration: mean lat.: 917.376ms, rate sampling interval: 3725ms
+      Thread calibration: mean lat.: 854.788ms, rate sampling interval: 3553ms
+      Thread calibration: mean lat.: 913.139ms, rate sampling interval: 3768ms
+      Thread calibration: mean lat.: 969.530ms, rate sampling interval: 3829ms
+      Thread calibration: mean lat.: 930.114ms, rate sampling interval: 3727ms
+      Thread calibration: mean lat.: 921.990ms, rate sampling interval: 3696ms
+      Thread calibration: mean lat.: 904.085ms, rate sampling interval: 3583ms
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency     2.64s   618.89ms   4.33s    65.41%
-        Req/Sec    10.54k   213.77    11.02k    68.75%
-      1656129 requests in 20.00s, 307.98MB read
-      Non-2xx or 3xx responses: 1656129
-    Requests/sec:  82820.24
-    Transfer/sec:     15.40MB
+        Latency     2.66s   725.80ms   4.53s    63.71%
+        Req/Sec    10.59k   517.25    11.30k    62.50%
+      1661684 requests in 20.00s, 278.91MB read
+    Requests/sec:  83092.87
+    Transfer/sec:     13.95MB
+
+And
+
+    wrk -t8 -c100 -d20s -R100000 http://127.0.0.1:3000/quacker?i=b9ogpt96K0NmkI
+is
+
+    Running 20s test @ http://127.0.0.1:3000/quacker?i=b9ogpt96K0NmkI
+      8 threads and 100 connections
+      Thread calibration: mean lat.: 4362.562ms, rate sampling interval: 15638ms
+      Thread calibration: mean lat.: 4374.573ms, rate sampling interval: 15687ms
+      Thread calibration: mean lat.: 4370.280ms, rate sampling interval: 15687ms
+      Thread calibration: mean lat.: 4368.448ms, rate sampling interval: 15679ms
+      Thread calibration: mean lat.: 4386.135ms, rate sampling interval: 15728ms
+      Thread calibration: mean lat.: 4385.946ms, rate sampling interval: 15712ms
+      Thread calibration: mean lat.: 4376.925ms, rate sampling interval: 15695ms
+      Thread calibration: mean lat.: 4375.103ms, rate sampling interval: 15712ms
+      Thread Stats   Avg      Stdev     Max   +/- Stdev
+        Latency    13.07s     2.48s   17.45s    57.65%
+        Req/Sec       -nan      -nan   0.00      0.00%
+      261960 requests in 20.00s, 93.18MB read
+    Requests/sec:  13097.65
+    Transfer/sec:      4.66MB
+
+And
+
+    wrk -t8 -c100 -d20s -R100000 http://localhost:3000/biteq?i=b9ogpt96K0NmkI
+is
+
+    Running 20s test @ http://localhost:3000/biteq?i=b9ogpt96K0NmkI
+      8 threads and 100 connections
+      Thread calibration: mean lat.: 4834.694ms, rate sampling interval: 17940ms
+      Thread calibration: mean lat.: 4977.547ms, rate sampling interval: 18087ms
+      Thread calibration: mean lat.: 5047.363ms, rate sampling interval: 18006ms
+      Thread calibration: mean lat.: 5093.558ms, rate sampling interval: 18153ms
+      Thread calibration: mean lat.: 5054.244ms, rate sampling interval: 18071ms
+      Thread calibration: mean lat.: 4981.165ms, rate sampling interval: 17989ms
+      Thread calibration: mean lat.: 5027.600ms, rate sampling interval: 17956ms
+      Thread calibration: mean lat.: 5086.062ms, rate sampling interval: 18202ms
+      Thread Stats   Avg      Stdev     Max   +/- Stdev
+        Latency    15.06s     2.87s   19.96s    57.57%
+        Req/Sec       -nan      -nan   0.00      0.00%
+      1577 requests in 20.07s, 569.81KB read
+    Requests/sec:     78.57
+    Transfer/sec:     28.39KB
+
 
 ### Akka 2.4.9-RC2 on Core i7 machine auto fusing off
 #### results from wrk command

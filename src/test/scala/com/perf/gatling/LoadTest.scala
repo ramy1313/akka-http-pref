@@ -11,7 +11,7 @@ import language.postfixOps
   */
 class LoadTest extends Simulation {
 
-  private val baseSmwAppUrl = s"http://localhost:8080"
+  private val baseSmwAppUrl = s"http://localhost:3000"
 
   val httpConf = http
     .baseURL(baseSmwAppUrl).disableWarmUp
