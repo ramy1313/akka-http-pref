@@ -4,6 +4,7 @@ import akka.actor.{Actor, Props}
 import akka.stream.ActorMaterializer
 import com.perf.AService._
 import com.perf.BiteWorker.BiteQ
+import com.perf.TomView.GetTomV
 
 /**
   * Created by rami on 8/8/16.
@@ -25,7 +26,7 @@ object AService {
 
   case class Bite()
 
-  case class Ack()
+  case class Ack() extends Result
 
   case class GetQuacker(i: String)
 
@@ -44,6 +45,8 @@ class AService extends Actor {
 
   val spike = context actorOf (SpikePersistentActor(), "Spike")
 
+  val tomView = context actorSelection "/user/AService/QueryAndViewManager/TomView"
+
   override def receive: Receive = {
     case c: CreateQuacker =>
       context.actorOf(QuackerPersistentActor(c.i)) forward c
@@ -59,5 +62,7 @@ class AService extends Actor {
       context.actorOf(QuackerView(g.i, mat)) forward g
     case b: BiteQ =>
       context.actorOf(BiteWorker(mat)) forward b
+    case g: GetTomV =>
+      tomView forward g
   }
 }

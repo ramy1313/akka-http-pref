@@ -1,12 +1,11 @@
 package com.perf
 
-import akka.actor.Actor.Receive
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.persistence.query.{EventEnvelope, PersistenceQuery}
 import akka.persistence.query.journal.leveldb.scaladsl.LeveldbReadJournal
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Keep, Sink}
-import com.perf.AService.{AnError, GetQuacker, GetQuackerResult}
+import com.perf.AService.{AnError, GetQuacker, GetQuackerResult, Result}
 import com.perf.JerryView.{GetJerryV, GetJerryVResult}
 import com.perf.QuackerPersistentActor.QuackerCreatedEvent
 import com.perf.QueryAndViewManager.{UpdateBite, UpdateJerry, UpdateSpike, UpdateTom}
@@ -56,7 +55,7 @@ object TomView {
   def apply() = Props[TomView]
 
   case class GetTomV()
-  case class GetTomVResult(v: String)
+  case class GetTomVResult(v: String) extends Result
 }
 
 class TomView extends Actor {

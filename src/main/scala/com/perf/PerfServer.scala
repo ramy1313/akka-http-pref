@@ -13,6 +13,7 @@ import akka.util.Timeout
 import akka.pattern.ask
 import com.perf.AService._
 import com.perf.BiteWorker.BiteQ
+import com.perf.TomView.{GetTomV, GetTomVResult}
 
 import scala.concurrent.duration._
 import language.postfixOps
@@ -122,6 +123,50 @@ object PerfServer extends App {
               complete(h)
           }
         }
+      }
+    } ~ path("tom") {
+      get {
+        onComplete((system.actorOf(RequestHandler()) ? GetTomV()).mapTo[Result]) {
+          case g: Try[GetTomVResult] =>
+            val gr = g.get
+            val s = gr.v + "\n"
+            val h = HttpResponse(status = 200, entity = s)
+              .withHeaders(
+                AccessControlAllowOrigin.create(HttpOriginRange.ALL),
+                `Access-Control-Allow-Headers`("Access-Control-Allow-Origin", "Access-Control-Allow-Method", "Content-Type"),
+                `Access-Control-Allow-Methods`(HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT, HttpMethods.OPTIONS, HttpMethods.DELETE)
+              )
+            complete(h)
+          case _ =>
+            val h = HttpResponse(status = 500, entity = "error")
+              .withHeaders(
+                AccessControlAllowOrigin.create(HttpOriginRange.ALL),
+                `Access-Control-Allow-Headers`("Access-Control-Allow-Origin", "Access-Control-Allow-Method", "Content-Type"),
+                `Access-Control-Allow-Methods`(HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT, HttpMethods.OPTIONS, HttpMethods.DELETE)
+              )
+            complete(h)
+        }
+      }
+    } ~ path("bite") {
+      onComplete((system.actorOf(RequestHandler()) ? Bite()).mapTo[Result]) {
+        case g: Try[Ack] =>
+          //val gr = g.get
+          val s = "Done" + "\n"
+          val h = HttpResponse(status = 200, entity = s)
+            .withHeaders(
+              AccessControlAllowOrigin.create(HttpOriginRange.ALL),
+              `Access-Control-Allow-Headers`("Access-Control-Allow-Origin", "Access-Control-Allow-Method", "Content-Type"),
+              `Access-Control-Allow-Methods`(HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT, HttpMethods.OPTIONS, HttpMethods.DELETE)
+            )
+          complete(h)
+        case _ =>
+          val h = HttpResponse(status = 500, entity = "error")
+            .withHeaders(
+              AccessControlAllowOrigin.create(HttpOriginRange.ALL),
+              `Access-Control-Allow-Headers`("Access-Control-Allow-Origin", "Access-Control-Allow-Method", "Content-Type"),
+              `Access-Control-Allow-Methods`(HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT, HttpMethods.OPTIONS, HttpMethods.DELETE)
+            )
+          complete(h)
       }
     }
 
