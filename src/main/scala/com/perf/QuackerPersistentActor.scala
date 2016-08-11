@@ -107,11 +107,11 @@ class SpikePersistentActor extends PersistentActor {
       }
     case b: Bite =>
       val event = SpikeBiteEvent(System.currentTimeMillis)
-      //persist(event) {
-        //event =>
-          //biteCount += 1
+      persist(event) {
+        event =>
+          biteCount += 1
           sender ! Ack()
-      //}
+      }
   }
 
   override def persistenceId: String = "Spike"

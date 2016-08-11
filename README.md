@@ -832,15 +832,15 @@ And
 is
 
     Concurrency Level:      100
-    Time taken for tests:   25.985 seconds
+    Time taken for tests:   1353.763 seconds
     Complete requests:      100000
     Failed requests:        0
     Total transferred:      38900000 bytes
     HTML transferred:       2700000 bytes
-    Requests per second:    3848.44 [#/sec] (mean)
-    Time per request:       25.985 [ms] (mean)
-    Time per request:       0.260 [ms] (mean, across all concurrent requests)
-    Transfer rate:          1461.96 [Kbytes/sec] received
+    Requests per second:    73.87 [#/sec] (mean)
+    Time per request:       1353.763 [ms] (mean)
+    Time per request:       13.538 [ms] (mean, across all concurrent requests)
+    Transfer rate:          28.06 [Kbytes/sec] received
 
 #### results from ab command (Keep-alive)
 
@@ -880,16 +880,16 @@ And
 is
 
     Concurrency Level:      100
-    Time taken for tests:   7.763 seconds
+    Time taken for tests:   1336.816 seconds
     Complete requests:      100000
     Failed requests:        0
     Keep-Alive requests:    100000
     Total transferred:      39400000 bytes
     HTML transferred:       2700000 bytes
-    Requests per second:    12881.94 [#/sec] (mean)
-    Time per request:       7.763 [ms] (mean)
-    Time per request:       0.078 [ms] (mean, across all concurrent requests)
-    Transfer rate:          4956.53 [Kbytes/sec] received
+    Requests per second:    74.80 [#/sec] (mean)
+    Time per request:       1336.816 [ms] (mean)
+    Time per request:       13.368 [ms] (mean, across all concurrent requests)
+    Transfer rate:          28.78 [Kbytes/sec] received
 
 #### results from wrk command
 
@@ -940,17 +940,17 @@ is
 
     Running 20s test @ http://127.0.0.1:3000/biteq?i=b9ogpt96K0NmkI
       8 threads and 100 connections
-      Thread calibration: mean lat.: 4409.314ms, rate sampling interval: 15826ms
-      Thread calibration: mean lat.: 4409.014ms, rate sampling interval: 15826ms
-      Thread calibration: mean lat.: 4395.976ms, rate sampling interval: 15818ms
-      Thread calibration: mean lat.: 4406.151ms, rate sampling interval: 15826ms
-      Thread calibration: mean lat.: 4400.117ms, rate sampling interval: 15818ms
-      Thread calibration: mean lat.: 4419.768ms, rate sampling interval: 15859ms
-      Thread calibration: mean lat.: 4396.140ms, rate sampling interval: 15810ms
-      Thread calibration: mean lat.: 4396.089ms, rate sampling interval: 15818ms
+      Thread calibration: mean lat.: 5008.189ms, rate sampling interval: 18087ms
+      Thread calibration: mean lat.: 4954.454ms, rate sampling interval: 17842ms
+      Thread calibration: mean lat.: 4991.647ms, rate sampling interval: 18071ms
+      Thread calibration: mean lat.: 4947.192ms, rate sampling interval: 17940ms
+      Thread calibration: mean lat.: 4998.353ms, rate sampling interval: 17727ms
+      Thread calibration: mean lat.: 5051.226ms, rate sampling interval: 18235ms
+      Thread calibration: mean lat.: 5011.694ms, rate sampling interval: 18186ms
+      Thread calibration: mean lat.: 5118.095ms, rate sampling interval: 18399ms
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency    13.17s     2.49s   17.53s    57.60%
+        Latency    14.95s     2.88s   19.94s    58.48%
         Req/Sec       -nan      -nan   0.00      0.00%
-      249563 requests in 20.00s, 88.06MB read
-    Requests/sec:  12478.68
-    Transfer/sec:      4.40MB
+      1578 requests in 20.07s, 570.18KB read
+    Requests/sec:     78.63
+    Transfer/sec:     28.41KB
